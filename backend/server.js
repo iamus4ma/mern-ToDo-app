@@ -1,0 +1,35 @@
+import express from "express"
+import mongoose from "mongoose"
+import cors from "cors"
+import dotenv from "dotenv"
+
+import userRouter from "./routes/userRoute.js"
+import taskRouter from "./routes/taskRoute.js"
+
+//app config
+dotenv.config()
+const app = express()
+mongoose.set('strictQuery', true);
+
+//middlewares
+app.use(express.json())
+app.use(cors())
+
+//db config
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+}, (err) => {
+    if (err) {
+        console.log(err)
+    } else {
+        console.log("DB Connected")
+    }
+})
+
+//api endpoints
+app.use("/api/user", userRouter)
+app.use("/api/task", taskRouter)
+
+
+//listen
+app.listen(8000, () => console.log("Listening on localhost: 8000"))

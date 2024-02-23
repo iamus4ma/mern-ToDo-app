@@ -1,0 +1,19 @@
+import express from "express";
+import {
+  addTask,
+  getTask,
+  getTaskById,
+  removeTask,
+  updateTask,
+} from "../controllers/taskController.js";
+import requireAuth from "../middleware/requireAuth.js";
+const router = express.Router();
+
+router.post("/addTask", requireAuth, addTask);
+router.get("/getTask", requireAuth, getTask);
+router.get("/getSingleTask/:id", requireAuth, getTaskById);
+router.delete("/removeTask/:id", requireAuth, removeTask);
+router.put("/updateTask/:id", requireAuth, updateTask);
+
+
+export default router;
